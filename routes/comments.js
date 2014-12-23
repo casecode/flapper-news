@@ -3,22 +3,9 @@
 
 var express = require('express');
 var mongoose = require('mongoose');
-var Post = require('../models/post');
 var Comment = require('../models/comment');
 
 var router = express.Router();
-
-router.param('post', function(req, res, next, id) {
-  var query = Post.findById(id);
-
-  query.exec(function(err, post) {
-    if (err) return next(err);
-    if (!post) return next(new Error("post not found"));
-
-    req.post = post;
-    return next();
-  });
-});
 
 router.param('comment', function(req, res, next, id) {
   var query = Comment.findById(id);

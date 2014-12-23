@@ -49,4 +49,9 @@ router.put('/:post/upvote', function(req, res, next) {
   });
 });
 
+// Move to comment router after adding post property to req
+router.use('/:post/comments', function(req, res, next) {
+  next();
+});
+
 module.exports = router;
