@@ -20,9 +20,6 @@ router.param('post', function(req, res, next, id) {
   });
 });
 
-// For comment routes, move to comment router after adding post property to request
-router.use('/:post/comments', comments);
-
 router.route('/')
   .get(function(req, res, next) {
     Post.find(function(err, posts) {
@@ -52,5 +49,8 @@ router.put('/:post/upvote', function(req, res, next) {
     res.json(post);
   });
 });
+
+// Move to comments router
+router.use('/:post/comments', comments);
 
 module.exports = router;
