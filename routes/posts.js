@@ -4,6 +4,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var Post = require('../models/post');
+var comments = require('./comments');
 
 var router = express.Router();
 
@@ -18,6 +19,9 @@ router.param('post', function(req, res, next, id) {
     return next();
   });
 });
+
+// For comment routes, move to comment router after adding post property to request
+router.use('/:post/comments', comments);
 
 router.route('/')
   .get(function(req, res, next) {
@@ -47,11 +51,6 @@ router.put('/:post/upvote', function(req, res, next) {
     if (err) return next(err);
     res.json(post);
   });
-});
-
-// Move to comment router after adding post property to req
-router.use('/:post/comments', function(req, res, next) {
-  next();
 });
 
 module.exports = router;
